@@ -1,5 +1,4 @@
 .App {
-  border: 1px solid red;
   background-color: lightgoldenrodyellow;
   width: 800px;
   margin: auto;
@@ -17,7 +16,6 @@
 
 .ToDoNewItem {
   padding: 0.25rem;
-  border: 1px solid blue;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,38 +1,55 @@
+import React from 'react';
 import './css/App.css';
 import ToDoItem from './components/ToDoItem';
 import ToDoNewItem from './components/ToDoNewItem';
 import { useState } from 'react';
+import { nanoid } from 'nanoid';
 
 const initialTodos: ToDo[] = [
   {
-    id: 1,
+    id: 'sdjhdfasdf',
     text: 'item 1',
-    completed: true,
+    completed: true
   },
   {
-    id: 2,
+    id: 'ooamanetey',
     text: 'item 2',
-    completed: false,
-  },
+    completed: false
+  }
 ];
 
 function App() {
   const [allTodos, setTodos] = useState(initialTodos);
 
-  const toggleTodo = (selectedTodo: ToDo) => {
+  function toggleTodo(selectedTodo: ToDo): void {
     const newTodos = allTodos.map((todo) => {
       if (todo.id === selectedTodo.id) {
         return {
           ...todo,
-          completed: !todo.completed,
+          completed: !todo.completed
         };
       }
       return todo;
     });
 
     setTodos(newTodos);
-  };
+  }
 
+  function addTodo(text: string) {
+    if (!text.length || !text.trim().length) {
+      alert('Text cannot be empty!');
+
+      return;
+    }
+
+    const newTodo: ToDo = {
+      id: nanoid(),
+      text,
+      completed: false
+    };
+
+    setTodos([...allTodos, newTodo]);
+  }
 
   return (
     <div className="App">
@@ -42,7 +59,7 @@ function App() {
           todo={todo}
           toggleTodo={toggleTodo} />
       ))}
-      <ToDoNewItem />
+      <ToDoNewItem addTodo={addTodo} />
     </div>
   );
 }
