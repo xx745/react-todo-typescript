@@ -3,7 +3,7 @@ import ToDoItem from './components/ToDoItem';
 import ToDoNewItem from './components/ToDoNewItem';
 import { useState } from 'react';
 
-const allTodos: ToDo[] = [
+const initialTodos: ToDo[] = [
   {
     id: 1,
     text: 'item 1',
@@ -17,10 +17,10 @@ const allTodos: ToDo[] = [
 ];
 
 function App() {
-  const [todos, setTodos] = useState(allTodos);
+  const [allTodos, setTodos] = useState(initialTodos);
 
   const toggleTodo = (selectedTodo: ToDo) => {
-    const newTodos = todos.map((todo) => {
+    const newTodos = allTodos.map((todo) => {
       if (todo.id === selectedTodo.id) {
         return {
           ...todo,
@@ -36,8 +36,12 @@ function App() {
 
   return (
     <div className="App">
-      <ToDoItem todo={todos[0]} toggleTodo={toggleTodo} />
-      <ToDoItem todo={todos[1]} toggleTodo={toggleTodo} />
+      {allTodos.map(todo => (
+        <ToDoItem
+          key={todo.text}
+          todo={todo}
+          toggleTodo={toggleTodo} />
+      ))}
       <ToDoNewItem />
     </div>
   );
