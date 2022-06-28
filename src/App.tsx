@@ -3,16 +3,15 @@ import './css/App.css';
 import ToDoItem from './components/ToDoItem';
 import ToDoNewItem from './components/ToDoNewItem';
 import { useState } from 'react';
-import { nanoid } from 'nanoid';
 
 const initialTodos: ToDo[] = [
   {
-    id: 'sdjhdfasdf',
+    id: 123,
     text: 'item 1',
     completed: true
   },
   {
-    id: 'ooamanetey',
+    id: 456,
     text: 'item 2',
     completed: false
   }
@@ -43,7 +42,7 @@ function App() {
     }
 
     const newTodo: ToDo = {
-      id: nanoid(),
+      id: new Date().getTime(),
       text,
       completed: false
     };
