@@ -1,3 +1,5 @@
+# Super simple ToDo app written in React.js and Typescript
+
 # Deployed to Surge.sh
 
 [https://react-ts-todo.surge.sh](https://react-ts-todo.surge.sh)

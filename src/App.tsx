@@ -1,24 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './css/App.css';
 import ToDoItem from './components/ToDoItem';
 import ToDoNewItem from './components/ToDoNewItem';
-import { useState } from 'react';
+import StorageApi from './services/StorageApi';
 
-const initialTodos: ToDo[] = [
-  {
-    id: 123,
-    text: 'item 1',
-    completed: true
-  },
-  {
-    id: 456,
-    text: 'item 2',
-    completed: false
-  }
-];
+const storage = new StorageApi();
+
+const initialTodos: ToDo[] = [];
 
 function App() {
   const [allTodos, setTodos] = useState(initialTodos);
+
+  useEffect(() => {
+    const savedToDos: ToDo[] = storage.loadTodos();
+
+    if (savedToDos.length) {
+      setTodos(savedToDos);
+    }
+  }, []); // called on mounted
+
+  function saveTodos(todosToSave: ToDo[]): void {
+    setTodos(todosToSave);
+    storage.saveTodos(todosToSave);
+  }
 
   function toggleTodo(selectedTodo: ToDo): void {
     const newTodos = allTodos.map((todo) => {
@@ -31,10 +35,10 @@ function App() {
       return todo;
     });
 
-    setTodos(newTodos);
+    saveTodos(newTodos);
   }
 
-  function addTodo(text: string) {
+  function addTodo(text: string): void {
     if (!text.length || !text.trim().length) {
       alert('Text cannot be empty!');
 
@@ -47,18 +51,35 @@ function App() {
       completed: false
     };
 
-    setTodos([...allTodos, newTodo]);
+    saveTodos([...allTodos, newTodo]);
+  }
+
+  function removeAllTodos(): void {
+    setTodos([]);
+    storage.removeTodos();
+  }
+
+  function removeTodo(todoToRemove: ToDo): void {
+    const newToDosArray: ToDo[] = allTodos.filter(todo => todo.id !== todoToRemove.id);
+
+    saveTodos(newToDosArray);
   }
 
   return (
     <div className="App">
       {allTodos.map(todo => (
         <ToDoItem
-          key={todo.text}
+          key={`${todo.text}-${todo.id}`}
           todo={todo}
-          toggleTodo={toggleTodo} />
+          toggleTodo={toggleTodo}
+          initRemoveTodo={removeTodo} />
       ))}
       <ToDoNewItem addTodo={addTodo} />
+      <button
+        className='ToDoClearAll__btn'
+        onClick={removeAllTodos}>
+        Remove all
+      </button>
     </div>
   );
 }

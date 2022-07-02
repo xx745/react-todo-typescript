@@ -30,6 +30,20 @@
   width: 100px;
   margin: 0.25rem;
   padding: 0.25rem;
+  font-weight: bold;
+}
+
+.RemoveToDo__btn {
+  margin-left: 0.5rem;
+  font-size: 10px;
+}
+
+.ToDoClearAll__btn {
+  width: 100px;
+  margin: 0.25rem;
+  padding: 0.25rem;
+  color: maroon;
+  font-weight: bold;
 }
 
 .line-through {
