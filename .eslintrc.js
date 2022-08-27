@@ -6,8 +6,6 @@ module.exports = {
     'jest': true
   },
   'extends': [
-    'eslint:recommended',
-    'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended'
   ],
   'settings': {
@@ -48,6 +46,7 @@ module.exports = {
     'prefer-const': 'error',
     'no-return-assign': 'off',
     'space-before-function-paren': ['error', { 'asyncArrow': 'always', 'named': 'never' }],
-    'no-unused-vars': 'warn'
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn'
   }
 };
